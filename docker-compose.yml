@@ -1,0 +1,18 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: notifications
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+     # RECIPIENT: email@example.com
+     # GROUP: Marketing
+    ports:
+      - "5433:5432"
+  notification_service:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
