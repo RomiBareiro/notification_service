@@ -15,13 +15,16 @@ This project is a notification service implemented in Go, designed to handle rat
 
 - Go 1.22 or higher
 - Docker (optional, for containerization)
+- PostreSql +16
 
 ### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/RomiBareiro/notification_service.git
-   cd notification_service
+1. Clone the repository.
+2. Install dependencies with `go mod download`.
+3. Set up your environment variables for database connections and API keys.
+4. Build and run the service with `go run main.go`.
+5. Make POST HTTP requests to `http://localhost:8080/sendNotif` to send notifications.
+
 
 ## Usage
 ### Running Locally
@@ -42,13 +45,13 @@ export POSTGRES_SSL_MODE=disable
 go run main.go
 ```
 
-### Using Docker
+## Using Docker
 To run the service using Docker:
-1- Build the Docker image:
+### 1- Build the Docker image:
 ```code 
 docker build -t notification-service .
 ```
-2- Run the Docker container:
+### 2- Run the Docker container:
 ```code
 docker run --name notification-service \
   -e POSTGRES_HOST=192.168.1.16 \
@@ -84,3 +87,12 @@ Output:
 }
 
 ```
+
+### What could be improved?
+* Authentication (JWT or OAuth or AWS cognito etc)
+* Monitoring (Grafana could be a good option)
+* API versioning
+* Fix docker compose
+* Add more restrictions for messages
+* Separate by go modules
+* Load balancer implementation
