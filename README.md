@@ -27,6 +27,12 @@ This project is a notification service implemented in Go, designed to handle rat
 
 
 ## Usage
+### Using Docker compose
+
+```code
+docker compose up --build
+```
+
 ### Running Locally
 To run the service locally:
 
@@ -91,8 +97,7 @@ Output:
 ### What could be improved?
 * Authentication (JWT or OAuth or AWS cognito etc)
 * Monitoring (Grafana could be a good option)
-* API versioning
-* Fix docker compose
+* API versioningd
 * Add more restrictions for messages
 * Separate by go modules
 * Load balancer implementation

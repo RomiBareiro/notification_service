@@ -1,18 +1,14 @@
-version: '3'
 services:
-  postgres:
-    image: postgres:latest
+  notification-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
     environment:
-      POSTGRES_DB: notifications
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: admin
-     # RECIPIENT: email@example.com
-     # GROUP: Marketing
-    ports:
-      - "5433:5432"
-  notification_service:
-    build: .
+      - POSTGRES_HOST=192.168.1.16
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=notifications
+      - POSTGRES_SSL_MODE=disable
     ports:
       - "8080:8080"
-    depends_on:
-      - postgres
