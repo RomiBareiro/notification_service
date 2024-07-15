@@ -23,7 +23,7 @@ This project is a notification service implemented in Go, designed to handle rat
 2. Install dependencies with `go mod download`.
 3. Set up your environment variables for database connections and API keys.
 4. Build and run the service with `go run main.go`.
-5. Make POST HTTP requests to `http://localhost:8080/notify` to send notifications.
+5. Make POST HTTP requests to `http://localhost:8080/sendNotif` to send notifications.
 
 
 ## Usage
@@ -94,12 +94,10 @@ Output:
     "timestamp": "0001-01-01T00:00:00Z" -- record date
 }
 
-
-```
-
 ### What could be improved?
 * Authentication (JWT or OAuth or AWS cognito etc)
 * Monitoring (Grafana could be a good option)
 * Add more restrictions for messages
 * Separate by go modules
 * Load balancer implementation
+
