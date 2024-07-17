@@ -55,7 +55,7 @@ func TestValidateInputData(t *testing.T) {
 			name:           "Valid Input",
 			input:          `{"recipient": "example@example.com", "group": "Marketing"}`,
 			expectedError:  "", // Happy path
-			expectedFields: types.InputInfo{Recipient: "example@example.com", NotificationGroup: "Marketing"},
+			expectedFields: types.InputInfo{Recipient: "example@example.com", NotificationGroup: "MARKETING"},
 		},
 		{
 			name:          "Invalid JSON",
@@ -70,7 +70,7 @@ func TestValidateInputData(t *testing.T) {
 		{
 			name:          "Invalid Notification Type",
 			input:         `{"recipient": "example@example.com", "group": "invalidType"}`,
-			expectedError: "invalid notification type: invalidType",
+			expectedError: "invalid notification type: INVALIDTYPE",
 		},
 	}
 
