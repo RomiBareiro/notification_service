@@ -1,0 +1,88 @@
+openapi: 3.0.0
+info:
+  title: Rate-Limited Notification Service
+  version: 1.0.0
+  description: API for a notification service with rate limiting.
+paths:
+  /notify:
+    post:
+      summary: Send a notification
+      description: Send a notification to a specific recipient with rate limiting applied.
+      operationId: sendNotification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationRequest'
+      responses:
+        '200':
+          description: Notification sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationResponse'
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: Invalid request body
+        '405':
+          description: Method not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: Method not allowed
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: Endpoint not found
+components:
+  schemas:
+    NotificationRequest:
+      type: object
+      properties:
+        recipient:
+          type: string
+          description: Recipient's name or email address
+          example: example@example.com
+        group:
+          type: string
+          description: Notification group (e.g., 'NEWS', 'MARKETING')
+          example: NEWS
+    NotificationResponse:
+      type: object
+      properties:
+        recipient:
+          type: string
+          description: Recipient's name or email address
+          example: example@example.com
+        group:
+          type: string
+          description: Notification group (e.g., 'NEWS', 'MARKETING')
+          example: NEWS
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the notification record
+          example: '0001-01-01T00:00:00Z'
+        message:
+          type: string
+          description: Message
+          example: success
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: Invalid request.
