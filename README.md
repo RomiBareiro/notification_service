@@ -23,7 +23,7 @@ This project is a notification service implemented in Go, designed to handle rat
 2. Install dependencies with `go mod download`.
 3. Set up your environment variables for database connections and API keys.
 4. Build and run the service with `go run main.go`.
-5. Make POST HTTP requests to `http://localhost:8080/sendNotif` to send notifications.
+5. Make POST HTTP requests to `http://localhost:8080/notify` to send notifications.
 
 
 ## Usage
@@ -73,7 +73,7 @@ docker run --name notification-service \
 ## API Endpoints
 The service exposes the following API endpoints:
 
-* POST /sendNotif: Sends a notification. Requires a JSON payload with the notification details.
+* POST /notify: Sends a notification. Requires a JSON payload with the notification details.
 
 ### Example payload:
 Input body

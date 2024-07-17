@@ -78,7 +78,7 @@ func (s *server) SendHandler(w http.ResponseWriter, r *http.Request) {
 
 func ServerSetup(svc *service.NotificationService) *server {
 	s := NewServer(context.Background(), svc)
-	http.HandleFunc("/sendNotif", s.SendHandler)
+	http.HandleFunc("/notify", s.SendHandler)
 
 	// start server
 	port := ":8080"

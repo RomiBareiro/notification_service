@@ -94,7 +94,7 @@ func TestSendHandler(t *testing.T) {
 
 	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case "/sendNotif":
+		case "/notify":
 			if r.Method != http.MethodPost {
 				http.Error(w, "Not allowed", http.StatusMethodNotAllowed)
 				return
@@ -163,7 +163,7 @@ func TestSendHandler(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			reqBody := strings.NewReader(tc.requestBody)
-			req, err := http.NewRequest("POST", s.URL+"/sendNotif", reqBody)
+			req, err := http.NewRequest("POST", s.URL+"/notify", reqBody)
 			if err != nil {
 				t.Fatalf("Failed to create request: %v", err)
 			}
