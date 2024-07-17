@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"notification_service/service"
 	"notification_service/types"
+	"strings"
 
 	"go.uber.org/zap"
 )
@@ -40,7 +41,7 @@ func ValidateInputData(body io.Reader) (types.InputInfo, error) {
 	if in.Recipient == "" || in.NotificationGroup == "" {
 		return types.InputInfo{}, errors.New("missing required fields")
 	}
-
+	in.NotificationGroup = types.NotificationType(strings.ToUpper(string(in.NotificationGroup)))
 	if !types.IsValidNotificationType(in.NotificationGroup) {
 		return types.InputInfo{}, fmt.Errorf("invalid notification type: %s", in.NotificationGroup)
 	}

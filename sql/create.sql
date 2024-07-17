@@ -2,7 +2,7 @@ CREATE SCHEMA notification_service;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE TYPE notification_service.notification_type AS ENUM ('STATUS', 'NEWS', 'Marketing');
+CREATE TYPE notification_service.notification_type AS ENUM ('STATUS', 'NEWS', 'MARKETING');
 
 CREATE TABLE notification_service.notifications (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -25,4 +25,4 @@ INSERT INTO notification_service.rate_limit_rules (notification_type, max_count,
 VALUES
     ('STATUS', 2, EXTRACT(EPOCH FROM INTERVAL '1 minute')),
     ('NEWS', 1, EXTRACT(EPOCH FROM INTERVAL '1 day')),
-    ('Marketing', 3, EXTRACT(EPOCH FROM INTERVAL '1 hour'));
+    ('MARKETING', 3, EXTRACT(EPOCH FROM INTERVAL '1 hour'));

@@ -9,7 +9,7 @@ type NotificationType string
 const (
 	Status    NotificationType = "STATUS"
 	News      NotificationType = "NEWS"
-	Marketing NotificationType = "Marketing"
+	Marketing NotificationType = "MARKETING"
 )
 
 type RateLimitRule struct {
