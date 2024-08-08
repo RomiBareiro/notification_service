@@ -73,7 +73,9 @@ docker run --name notification-service \
 ## API Endpoints
 The service exposes the following API endpoints:
 
-* POST /notify: Sends a notification. Requires a JSON payload with the notification details.
+1. POST /login: Get auth token. It must be refreshed every 5 min. *keys: username, password*
+
+2. POST /V1/notify: Sends a notification. Requires a JSON payload with the notification details.
 
 ### Example payload:
 Input body
