@@ -62,7 +62,7 @@ func (s *server) SendHandler(w http.ResponseWriter, r *http.Request) {
 	in, err := ValidateInputData(r.Body)
 	if err != nil {
 		errorResponse := t.ErrorResponse{
-			Code:    http.StatusUnauthorized,
+			Code:    http.StatusUnprocessableEntity,
 			Message: err.Error(),
 		}
 		w.Header().Set("Content-Type", "application/json")
@@ -77,7 +77,7 @@ func (s *server) SendHandler(w http.ResponseWriter, r *http.Request) {
 	out, err := s.Svc.SendNotification(s.ctx)
 	if err != nil {
 		errorResponse := t.ErrorResponse{
-			Code:    http.StatusUnauthorized,
+			Code:    http.StatusInternalServerError,
 			Message: err.Error(),
 		}
 		w.Header().Set("Content-Type", "application/json")
@@ -91,7 +91,7 @@ func (s *server) SendHandler(w http.ResponseWriter, r *http.Request) {
 	response, err := json.Marshal(out)
 	if err != nil {
 		errorResponse := t.ErrorResponse{
-			Code:    http.StatusUnauthorized,
+			Code:    http.StatusInternalServerError,
 			Message: err.Error(),
 		}
 		w.Header().Set("Content-Type", "application/json")
