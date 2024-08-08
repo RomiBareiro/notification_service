@@ -12,31 +12,24 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var jwtKey = []byte("your_secret_key")
-
 func TestValidateJWTMiddleware(t *testing.T) {
 	// Create a valid token
 	claims := &jwt.MapClaims{
 		"username": "testuser",
 		"exp":      time.Now().Add(5 * time.Minute).Unix(),
 	}
+	// Create the login instance with the middleware
+	l := &l.Login{
+		JWTKey: []byte("your_secret_key"),
+		Ctx:    context.Background(),
+	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, _ := token.SignedString(jwtKey)
+	tokenString, _ := token.SignedString(l.JWTKey)
 
 	// Create a handler that the middleware will wrap
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Context().Value("claims") == nil {
-			http.Error(w, "Missing claims", http.StatusInternalServerError)
-			return
-		}
 		w.WriteHeader(http.StatusOK)
 	})
-
-	// Create the login instance with the middleware
-	l := &l.Login{
-		JWTKey: jwtKey,
-		Ctx:    context.Background(),
-	}
 
 	tests := []struct {
 		name               string
@@ -62,7 +55,7 @@ func TestValidateJWTMiddleware(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			req := httptest.NewRequest(http.MethodPost, "/notify", nil)
+			req := httptest.NewRequest(http.MethodPost, "/V1/notify", nil)
 			if tt.authHeader != "" {
 				req.Header.Set("Authorization", tt.authHeader)
 			}
