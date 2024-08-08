@@ -4,11 +4,61 @@ info:
   version: 1.0.0
   description: API for a notification service with rate limiting.
 paths:
-  /notify:
+  /login:
+    post:
+      summary: Authenticate and get a JWT token
+      description: Authenticate a user and provide a JWT token for accessing protected endpoints.
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: Username for authentication
+                  example: testuser
+                password:
+                  type: string
+                  description: Password for authentication
+                  example: testpassword
+      responses:
+        '200':
+          description: JWT token issued successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: JWT token
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNjg1ODg0MDYyfQ.SFLfOPIcIri3FG9Jz6G5Fs9EGs0A8Fs1_XdZVc-Q9bA
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: Invalid credentials
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: Error generating token
+  /V1/notify:
     post:
       summary: Send a notification
       description: Send a notification to a specific recipient with rate limiting applied.
       operationId: sendNotification
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -86,3 +136,8 @@ components:
           type: string
           description: Error message
           example: Invalid request.
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
