@@ -2,7 +2,10 @@ package login
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"net/http"
+	t "notification_service/types"
 	"strings"
 
 	"github.com/golang-jwt/jwt/v4"
@@ -21,10 +24,20 @@ const (
 )
 
 func (l *Login) ValidateJWTMiddleware(next http.Handler) http.Handler {
+	var err error
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		authHeader := r.Header.Get("Authorization")
 		if authHeader == "" {
-			http.Error(w, "Missing Authorization Header", http.StatusUnauthorized)
+			err = fmt.Errorf("Authorization token is missing")
+			errorResponse := t.ErrorResponse{
+				Code:    http.StatusUnauthorized,
+				Message: err.Error(),
+			}
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusUnauthorized)
+			if err = json.NewEncoder(w).Encode(errorResponse); err != nil {
+				l.Logger.Sugar().Errorf("could not encoder response: ", err)
+			}
 			return
 		}
 
@@ -32,7 +45,16 @@ func (l *Login) ValidateJWTMiddleware(next http.Handler) http.Handler {
 
 		token, claims, err := validateToken(tokenString, l.JWTKey)
 		if err != nil || !token.Valid {
-			http.Error(w, "Invalid token", http.StatusUnauthorized)
+			err = fmt.Errorf("Invalid token")
+			errorResponse := t.ErrorResponse{
+				Code:    http.StatusUnauthorized,
+				Message: err.Error(),
+			}
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusUnauthorized)
+			if err = json.NewEncoder(w).Encode(errorResponse); err != nil {
+				l.Logger.Sugar().Errorf("could not encoder response: ", err)
+			}
 			return
 		}
 

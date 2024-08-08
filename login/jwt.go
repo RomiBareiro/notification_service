@@ -3,6 +3,7 @@ package login
 import (
 	"encoding/json"
 	"net/http"
+	t "notification_service/types"
 	"time"
 
 	"github.com/golang-jwt/jwt"
@@ -13,7 +14,15 @@ func (l *Login) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	password := r.FormValue("password")
 
 	if username != "testuser" || password != "testpassword" { //TODO: improve user data adquisition
-		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
+		errorResponse := t.ErrorResponse{
+			Code:    http.StatusUnauthorized,
+			Message: "Invalid credentials",
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusUnauthorized)
+		if err := json.NewEncoder(w).Encode(errorResponse); err != nil {
+			l.Logger.Sugar().Errorf("could not encoder response: ", err)
+		}
 		return
 	}
 
@@ -33,6 +42,14 @@ func (l *Login) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	encoder := json.NewEncoder(w)
 	if err := encoder.Encode(map[string]string{"token": tokenString}); err != nil {
-		http.Error(w, "Error encoding response", http.StatusInternalServerError)
+		errorResponse := t.ErrorResponse{
+			Code:    http.StatusUnauthorized,
+			Message: "Error encoding response",
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusInternalServerError)
+		if err = json.NewEncoder(w).Encode(errorResponse); err != nil {
+			l.Logger.Sugar().Errorf("could not encoder response: ", errorResponse)
+		}
 	}
 }

@@ -10,6 +10,7 @@ import (
 	"notification_service/login"
 	"notification_service/service"
 	"notification_service/types"
+	t "notification_service/types"
 	"strings"
 
 	"github.com/gorilla/mux"
@@ -60,20 +61,44 @@ func (s *server) SendHandler(w http.ResponseWriter, r *http.Request) {
 
 	in, err := ValidateInputData(r.Body)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusUnprocessableEntity)
+		errorResponse := t.ErrorResponse{
+			Code:    http.StatusUnauthorized,
+			Message: err.Error(),
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusUnprocessableEntity)
+		if err := json.NewEncoder(w).Encode(errorResponse); err != nil {
+			s.Logger.Sugar().Errorf("could not encoder response: ", err)
+		}
 		return
 	}
 
 	s.Svc.Input = in
 	out, err := s.Svc.SendNotification(s.ctx)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		errorResponse := t.ErrorResponse{
+			Code:    http.StatusUnauthorized,
+			Message: err.Error(),
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusInternalServerError)
+		if err := json.NewEncoder(w).Encode(errorResponse); err != nil {
+			s.Logger.Sugar().Errorf("could not encoder response: ", err)
+		}
 		return
 	}
 
 	response, err := json.Marshal(out)
 	if err != nil {
-		http.Error(w, "Error marshaling response", http.StatusInternalServerError)
+		errorResponse := t.ErrorResponse{
+			Code:    http.StatusUnauthorized,
+			Message: err.Error(),
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusInternalServerError)
+		if err := json.NewEncoder(w).Encode(errorResponse); err != nil {
+			s.Logger.Sugar().Errorf("could not encoder response: ", err)
+		}
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")

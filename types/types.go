@@ -48,6 +48,11 @@ type DatabaseConfig struct {
 	SSLMode  string
 }
 
+type ErrorResponse struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}
+
 var ValidNotificationTypes = []NotificationType{Status, Marketing, News}
 
 func IsValidNotificationType(t NotificationType) bool {
