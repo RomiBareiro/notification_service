@@ -93,9 +93,9 @@ Output:
     "message": "success",
     "timestamp": "0001-01-01T00:00:00Z" -- record date
 }
+```
 
-### What could be improved?
-* Authentication (JWT or OAuth or AWS cognito etc)
+### What could be improved
 * Monitoring (Grafana could be a good option)
 * Add more restrictions for messages
 * Separate by go modules
