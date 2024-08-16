@@ -100,7 +100,6 @@ Output:
 ### What could be improved?
 * Authentication (JWT or OAuth or AWS cognito etc)
 * Monitoring (Grafana could be a good option)
-* API versioningd
 * Add more restrictions for messages
 * Separate by go modules
 * Load balancer implementation
