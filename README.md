@@ -60,12 +60,11 @@ The service exposes the following API endpoints:
 
 ## Message types
 Currently, we have:
-'''
+```code
     ('STATUS', 2, EXTRACT(EPOCH FROM INTERVAL '1 minute')),
     ('NEWS', 1, EXTRACT(EPOCH FROM INTERVAL '1 day')),
     ('MARKETING', 3, EXTRACT(EPOCH FROM INTERVAL '1 hour'));
-'''
-
+```
 ### Example payload:
 Input body
 ```json 
