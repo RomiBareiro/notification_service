@@ -1,3 +1,6 @@
+-- Create extension pgcrypto if it does not already exist
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 CREATE SCHEMA notification_service;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -20,9 +23,3 @@ CREATE TABLE notification_service.rate_limit_rules (
     max_count INTEGER NOT NULL,
     duration NUMERIC NOT NULL
 );
-
-INSERT INTO notification_service.rate_limit_rules (notification_type, max_count, duration)
-VALUES
-    ('STATUS', 2, EXTRACT(EPOCH FROM INTERVAL '1 minute')),
-    ('NEWS', 1, EXTRACT(EPOCH FROM INTERVAL '1 day')),
-    ('MARKETING', 3, EXTRACT(EPOCH FROM INTERVAL '1 hour'));
