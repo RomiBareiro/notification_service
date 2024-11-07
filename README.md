@@ -14,7 +14,7 @@ This project is a notification service implemented in Go, designed to handle rat
 ### Prerequisites
 
 - Go 1.22 or higher
-- Docker (optional, for containerization)
+- Docker
 - PostreSql +16
 
 ### Installation
@@ -23,7 +23,7 @@ This project is a notification service implemented in Go, designed to handle rat
 2. Install dependencies with `go mod download`.
 3. Set up your environment variables for database connections and API keys.
 4. Build and run the service with `go run main.go`.
-5. Make POST HTTP requests to `http://localhost:8080/sendNotif` to send notifications.
+5. Make POST HTTP requests to `http://localhost:8080/V1/notify` to send notifications.
 
 
 ## Usage
@@ -51,31 +51,20 @@ export POSTGRES_SSL_MODE=disable
 go run main.go
 ```
 
-## Using Docker
-To run the service using Docker:
-### 1- Build the Docker image:
-```code 
-docker build -t notification-service .
-```
-### 2- Run the Docker container:
-```code
-docker run --name notification-service \
-  -e POSTGRES_HOST=192.168.1.16 \
-  -e POSTGRES_PORT=5432 \
-  -e POSTGRES_USER=postgres \
-  -e POSTGRES_PASSWORD=admin \
-  -e POSTGRES_DB=notifications \
-  -e POSTGRES_SSL_MODE=disable \
-  -p 8080:8080 \
-  -d notification-service
-```
-
 ## API Endpoints
 The service exposes the following API endpoints:
 
 1. POST /login: Get auth token. It must be refreshed every 5 min. *keys: username, password*
 
 2. POST /V1/notify: Sends a notification. Requires a JSON payload with the notification details.
+
+## Message types
+Currently, we have:
+'''
+    ('STATUS', 2, EXTRACT(EPOCH FROM INTERVAL '1 minute')),
+    ('NEWS', 1, EXTRACT(EPOCH FROM INTERVAL '1 day')),
+    ('MARKETING', 3, EXTRACT(EPOCH FROM INTERVAL '1 hour'));
+'''
 
 ### Example payload:
 Input body
@@ -95,7 +84,7 @@ Output:
 }
 ```
 
-### What could be improved
+### What could be improved?
 * Monitoring (Grafana could be a good option)
 * Add more restrictions for messages
 * Separate by go modules
