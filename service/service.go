@@ -35,6 +35,9 @@ func (s *NotificationService) SendNotification(ctx context.Context) (t.Output, e
 	if err := s.DB.RecordNotification(ctx, &s.Input, s.CurrentNotification); err != nil {
 		return t.Output{}, fmt.Errorf("could not update notifications table: %v", err)
 	}
+	if err := sendTelegramMessage(5751493884, "HOLA ROMI ENVIADO!"); err != nil {
+		return t.Output{}, fmt.Errorf("could not send telegram message: %v", err)
+	}
 	// TODO: Implement sending logic here
 	s.Logger.Info("notification is sent",
 		zap.String("recipient", s.Input.Recipient),

@@ -17,6 +17,7 @@ require (
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/stretchr/objx v0.5.2 // indirect
+	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
 	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 )
@@ -24,6 +25,7 @@ require (
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.2
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/gorilla/mux v1.8.1
 	github.com/pmezard/go-difflib v1.0.0 // indirect

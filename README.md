@@ -1,6 +1,7 @@
 # Notification Service
 
 This project is a notification service implemented in Go, designed to handle rate-limited notifications efficiently.
+Currently, it implements a telegram bot given token ID and chat ID. In a next future, I will implement more services
 
 ## Features
 
@@ -27,6 +28,18 @@ This project is a notification service implemented in Go, designed to handle rat
 
 
 ## Usage
+Create a .env file, like this one:
+
+```code
+ENVIRONMENT=dev
+POSTGRES_HOST=127.0.0.1
+POSTGRES_PORT=5432
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=admin
+POSTGRES_DB=notifications
+POSTGRES_SSL_MODE=disable
+TELEGRAM_TOKEN=PUT_YOUR_CHATBOT_TOKEN_HERE
+```
 ### Using Docker compose
 
 ```code
@@ -88,4 +101,5 @@ Output:
 * Add more restrictions for messages
 * Separate by go modules
 * Load balancer implementation
-
+* Add more services (whatsapp, email, etc)
+* Abstract service structs
