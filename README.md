@@ -14,7 +14,7 @@ Currently, it implements a telegram bot given token ID and chat ID. In a next fu
 
 ### Prerequisites
 
-- Go 1.22 or higher
+- Go 1.26 or higher
 - Docker
 - PostreSql +16
 

@@ -1,0 +1,33 @@
+$kind: http-request
+name: Authenticate and get a JWT token
+description: Authenticate a user and provide a JWT token for accessing protected endpoints.
+url: "{{baseUrl}}/login"
+method: POST
+headers:
+  Content-Type: application/x-www-form-urlencoded
+  Accept: application/json
+body:
+  type: urlencoded
+  content:
+    - key: username
+      value: testuser
+      description: Username for authentication
+    - key: password
+      value: testpassword
+      description: Password for authentication
+scripts:
+  - type: afterResponse
+    code: |
+      pm.test("Status code is 200", function () {
+      pm.response.to.have.status(200);
+      });
+
+      const responseJson = pm.response.json();
+
+      if (responseJson.token) {
+      pm.environment.set("jwt_token", responseJson.token);
+      console.log("JWT token saved!");
+      }
+    language: text/javascript
+examples: .resources/Authenticate and get a JWT token.resources/examples
+order: 1000

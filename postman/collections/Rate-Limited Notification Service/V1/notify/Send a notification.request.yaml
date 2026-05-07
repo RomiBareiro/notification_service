@@ -1,0 +1,21 @@
+$kind: http-request
+name: Send a notification
+description: Send a notification to a specific recipient with rate limiting applied.
+url: "{{baseUrl}}/V1/notify"
+method: POST
+headers:
+  Content-Type: application/json
+  Accept: application/json
+body:
+  type: json
+  content: |-
+    {
+      "recipient": "example@example.com",
+      "group": "NEWS"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{jwt_token}}"
+examples: ./.resources/Send a notification.resources/examples
+order: 1000

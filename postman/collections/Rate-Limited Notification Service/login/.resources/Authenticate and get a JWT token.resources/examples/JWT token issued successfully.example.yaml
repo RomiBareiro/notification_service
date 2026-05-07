@@ -1,0 +1,28 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/login"
+  method: POST
+  headers:
+    Content-Type: application/x-www-form-urlencoded
+    Accept: application/json
+  body:
+    type: urlencoded
+    content:
+      - key: username
+        value: testuser
+        description: Username for authentication
+      - key: password
+        value: testpassword
+        description: Password for authentication
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    Content-Type: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaWF0IjoxNjg1ODg0MDYyfQ.SFLfOPIcIri3FG9Jz6G5Fs9EGs0A8Fs1_XdZVc-Q9bA"
+      }
+order: 1000

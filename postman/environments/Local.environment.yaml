@@ -1,0 +1,6 @@
+name: Local
+values:
+  - key: jwt_token
+    value: ''
+  - key: baseUrl
+    value: ''
